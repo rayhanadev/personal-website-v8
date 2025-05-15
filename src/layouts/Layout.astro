@@ -1,0 +1,130 @@
+---
+import { PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
+import { ClientRouter } from "astro:transitions";
+
+import { Head } from "astro-capo";
+import { SEO } from "astro-seo";
+
+import { FULL_NAME, EMAIL_ADDRESS, JSONLD } from "lib/consts";
+
+import "styles/global.css";
+
+const { title, description, og, twitter } = Astro.props;
+
+export interface Props {
+    title: string;
+    description: string;
+    og?: {
+        title: string;
+        description: string;
+    };
+    twitter?: {
+        title: string;
+        description: string;
+    };
+}
+---
+
+<!doctype html>
+<html lang="en">
+    <Head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(JSONLD)}
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/favicon-96x96.png"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="apple-mobile-web-app-title" content="rayhanadev" />
+        <link rel="manifest" href="/manifest.json" />
+
+        <meta
+            name="robots"
+            content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+        />
+
+        <SEO
+            title={title}
+            description={description}
+            canonical={import.meta.env.SITE}
+            openGraph={{
+                basic: {
+                    type: "website",
+                    title: og?.title ?? title,
+                    image: `${import.meta.env.SITE}/opengraph.png`,
+                },
+                optional: {
+                    description: og?.description ?? description,
+                    locale: "en-US",
+                    siteName: "rayhanadev.com",
+                },
+                image: {
+                    alt: "Ray's cover image, with the text: Fullstack Web Developer and Software Engineer. Contact me at me@rayhanadev.com.",
+                    type: "image/png",
+                },
+            }}
+            twitter={{
+                title: twitter?.title ?? title,
+                description: twitter?.description ?? description,
+                image: `${import.meta.env.SITE}/opengraph.png`,
+                imageAlt:
+                    "Ray's cover image, with the text: Fullstack Web Developer and Software Engineer. Contact me at me@rayhanadev.com.",
+                card: "summary_large_image",
+                site: "rayhanadev",
+                creator: "rayhanadev",
+            }}
+        />
+
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title={"Ray's Digital Garden 🪴"}
+            href={`${import.meta.env.SITE}/rss.xml`}
+        />
+
+        <meta name="author" content={`${FULL_NAME}, ${EMAIL_ADDRESS}`} />
+        <link rel="me" href="https://hachyderm.io/@rayhanadev" />
+        <meta
+            name="keywords"
+            content="ray, rayhan, noufal, arayilakath, rayhan noufal, rayhan arayilakath, rayhan noufal arayilakath, ray arayilakath, rayhanadev, furret, furret developer, furret.css, furret.dev, furret.codes, fullstack web, fullstack developer, fullstack, developer, software, software engineer, replit"
+        />
+
+        {
+            import.meta.env.PROD && (
+                <script
+                    defer
+                    is:inline
+                    src="/script.js"
+                    type="text/partytown"
+                    data-website-id={PUBLIC_UMAMI_WEBSITE_ID}
+                    data-host-url={import.meta.env.SITE}
+                />
+            )
+        }
+
+        <ClientRouter />
+    </Head>
+    <body class="flex flex-col h-dvh w-full px-[10px]">
+        <slot />
+    </body>
+</html>
