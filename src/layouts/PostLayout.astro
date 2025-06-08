@@ -1,0 +1,150 @@
+---
+import { PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
+import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
+
+import { Head } from "astro-capo";
+import { SEO } from "astro-seo";
+
+import { JSONLD, FULL_NAME, EMAIL_ADDRESS } from "lib/consts";
+
+import "styles/global.css";
+
+const { id, title, description, tags = [], date, og, twitter } = Astro.props;
+
+export interface Props {
+    id: string;
+    title: string;
+    description: string;
+    tags: string[];
+    date: Date | string;
+    og?: {
+        title: string;
+        description: string;
+    };
+    twitter?: {
+        title: string;
+        description: string;
+    };
+}
+---
+
+<!doctype html>
+<html lang="en" class="scrollbar-override">
+    <Head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(JSONLD)}
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/favicon-96x96.png"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+
+        <Font cssVariable="--font-instrument-serif" preload />
+        <Font cssVariable="--font-general-sans" preload />
+        <Font cssVariable="--font-geist-mono" preload />
+
+        <link rel="prefetch" href={`/blog/${id}/cover.png`} />
+
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="apple-mobile-web-app-title" content="rayhanadev" />
+        <link rel="manifest" href="/manifest.json" />
+
+        <meta
+            name="robots"
+            content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+        />
+
+        <SEO
+            title={`${title} | Ray Arayilakath`}
+            description={description}
+            canonical={import.meta.env.SITE}
+            openGraph={{
+                basic: {
+                    type: "article",
+                    title: og?.title ?? title,
+                    image: `${import.meta.env.SITE}/open-graph/${id}.png`,
+                },
+                optional: {
+                    description: og?.description ?? description,
+                    locale: "en-US",
+                    siteName: "rayhanadev.com",
+                },
+                image: {
+                    alt: "Black squares in various colors that are speckled across a white background.",
+                    type: "image/png",
+                },
+                article: {
+                    publishedTime: date.toString(),
+                    modifiedTime: date.toString(),
+                    authors: ["Rayhan Noufal Arayilakath"],
+                    section: "Blog",
+                    tags: [...tags],
+                },
+            }}
+            twitter={{
+                title: twitter?.title ?? title,
+                description: twitter?.description ?? description,
+                image: `${import.meta.env.SITE}/twitter/${id}.png`,
+                imageAlt:
+                    "Black squares in various colors that are speckled across a white background.",
+                card: "summary_large_image",
+                site: "rayhanadev",
+                creator: "rayhanadev",
+            }}
+        />
+
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title={"Ray's Digital Garden 🪴"}
+            href={`${import.meta.env.SITE}/rss.xml`}
+        />
+
+        <meta name="author" content={`${FULL_NAME}, ${EMAIL_ADDRESS}`} />
+        <meta name="fediverse:creator" content="@rayhanadev@hachyderm.io" />
+        <meta
+            name="keywords"
+            content={tags.join(", ") +
+                "ray, rayhan, noufal, arayilakath, rayhan noufal, rayhan arayilakath, rayhan noufal arayilakath, ray arayilakath, rayhanadev, furret, furret developer, furret.css, furret.dev, furret.codes, fullstack web, fullstack developer, fullstack, developer, software, software engineer, replit"}
+        />
+
+        {
+            import.meta.env.PROD && (
+                <script
+                    defer
+                    is:inline
+                    src="/script.js"
+                    type="text/partytown"
+                    data-website-id={PUBLIC_UMAMI_WEBSITE_ID}
+                    data-host-url={import.meta.env.SITE}
+                />
+            )
+        }
+
+        <link href="/prism.css" rel="stylesheet" />
+
+        <ClientRouter />
+    </Head>
+    <body class="flex flex-col h-dvh w-full px-[10px]">
+        <slot />
+    </body>
+</html>

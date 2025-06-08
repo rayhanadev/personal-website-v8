@@ -1,0 +1,18 @@
+---
+import { Picture } from "astro:assets";
+
+interface Props {
+    src: ImageMetadata;
+    alt: string;
+    gif?: boolean;
+}
+
+const { src, alt, gif = false } = Astro.props;
+---
+
+<Picture
+    src={src}
+    alt={alt}
+    formats={gif ? ["gif"] : ["avif", "webp"]}
+    loading="lazy"
+/>

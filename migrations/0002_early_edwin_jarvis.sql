@@ -1,0 +1,1 @@
+ALTER TABLE `views` RENAME COLUMN "path" TO "id";

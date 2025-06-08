@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "layouts/Layout.astro";
+
+import NavBar from "components/NavBar.astro";
+import Link from "components/Link.astro";
+
+const entries = await getCollection("work").then((entries) =>
+    entries
+        .map((entry) => ({ ...entry.data }))
+        .sort((a, b) => b.index - a.index),
+);
+---
+
+<Layout
+    title="Ray Arayilakath - Software Engineer"
+    description="3+ years of experience growing engineering at YC-backed startups 🪴. researching tech justice at purdue university. building ethical and equitable software for the next 10 billion developers."
+>
+    <div
+        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override mt-4 md:mt-8 px-2 md:px-4 mx-auto pb-16"
+    >
+        <NavBar />
+        <div
+            class="flex flex-col items-start justify-start gap-4 md:gap-6 mt-4 md:mt-11 w-full h-min"
+        >
+            <h1 class="font-serif text-4xl md:text-6xl">Work Experience</h1>
+            <div class="flex flex-col items-start justify-start gap-2 md:gap-3">
+                <p class="md:text-2xl">
+                    I’m a self-taught full-stack software engineer with 4+ years
+                    of experience building scalable cloud technologies and
+                    customer-led product development with Y Combinator and
+                    Techstars backed startups, excelling in early-stage product
+                    and GTM development and anti-abuse work.
+                </p>
+                <p class="md:text-2xl">
+                    You can find my resume <Link
+                        external
+                        umami={{ event: "resume-clicked" }}
+                        href="/resume.pdf">here</Link
+                    >.
+                </p>
+            </div>
+        </div>
+        <div
+            class="relative flex flex-col items-start justify-start gap-6 w-full mt-16 md:pl-20 pb-14 md:pb-0"
+        >
+            <div
+                class="hidden md:block absolute left-[28px] md:left-[36px] top-0 bottom-0 w-px md:w-[2px] bg-foreground -mb-14"
+            >
+            </div>
+
+            {
+                entries.map(
+                    ({ company, title, start, end, description }, index) => (
+                        <div class="flex flex-col items-start justify-start gap-5 w-full">
+                            <div class="flex flex-col items-start justify-start">
+                                <div class="flex flex-row items-start justify-start">
+                                    <div class="hidden md:block absolute left-[20.5px] md:left-[28.5px] w-4 h-4 bg-foreground rounded-full mt-7" />
+                                    <h2 class="font-serif text-3xl md:text-5xl leading-normal">
+                                        {company}
+                                    </h2>
+                                </div>
+                                <p class="text-lg md:text-2xl leading-normal w-full">
+                                    {title} ◦ {start} - {end ?? "Present"}
+                                </p>
+                            </div>
+                            <p class="text-sm md:text-xl leading-normal max-w-[582px]">
+                                {description}
+                            </p>
+                            {index !== entries.length - 1 && (
+                                <hr class="w-full block md:hidden mx-auto" />
+                            )}
+                        </div>
+                    ),
+                )
+            }
+        </div>
+    </div>
+</Layout>

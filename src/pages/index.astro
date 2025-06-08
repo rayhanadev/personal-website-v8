@@ -1,13 +1,71 @@
 ---
 import Layout from "layouts/Layout.astro";
+
+import AsciiRenderer from "components/AsciiRenderer";
+import Link from "components/Link.astro";
+// import Location from "components/Location";
+import Spotify from "components/Spotify";
+import NavBar from "components/NavBar.astro";
+import Socials from "components/Socials.astro";
+
+import Header from "assets/Header.svg";
+import WebringLink from "components/WebringLink.astro";
 ---
 
 <Layout
-  title="Ray Arayilakath - Software Engineer"
-  description="3+ years of experience growing engineering at YC-backed startups 🪴. researching tech justice at purdue university. building ethical and equitable software for the next 10 billion developers."
+    title="Ray Arayilakath - Software Engineer"
+    description="4+ years of experience growing engineering at YC-backed startups 🪴. Researching tech justice at Purdue University. Building ethical and equitable software for the next 10 billion developers."
 >
-  <div
-    class="flex flex-col items-start justify-start h-full w-full overflow-y-hidden scrollbar-override"
-  >
-  </div>
+    <div
+        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override md:overflow-y-clip mt-4 md:mt-8 px-2 md:px-4 mx-auto"
+    >
+        <NavBar />
+        <Header class="w-full md:min-h-[181px] -mt-8 md:mt-9 dark:invert" />
+        <div class="flex flex-row items-center justify-start w-full h-full">
+            <div
+                class="flex flex-col items-start justify-start gap-4 md:gap-8 h-full w-full md:w-[633px] md:pt-14"
+            >
+                <div
+                    class="hidden md:flex flex-col items-start justify-around gap-2 w-full"
+                >
+                    <h2 class="font-serif text-4xl md:text-5xl w-full">
+                        SWE & AI Researcher
+                    </h2>
+                    <h2 class="font-serif text-4xl md:text-5xl w-full">
+                        President @ Purdue Hackers
+                    </h2>
+                </div>
+                <p class="w-full text-lg md:text-2xl -mt-8">
+                    4+ years of <Link href="/work">experience</Link> growing engineering
+                    at YC-backed startups. Researching tech justice at Purdue University.
+                    Building ethical and equitable software for the next 10 billion
+                    developers.
+                </p>
+                <p class="w-full text-lg md:text-2xl">
+                    Read about my work on <Link href="/blog">my blog</Link>.
+                </p>
+                <div class="w-full h-full block md:hidden mx-auto my-auto ml-4">
+                    <AsciiRenderer resolution={0.4} client:visible />
+                </div>
+                <div
+                    class="mt-auto mb-6 md:mb-4 flex flex-col items-start justify-end gap-1 w-full"
+                >
+                    <Socials />
+                    <div class="flex flex-row items-start justify-start gap-1">
+                        <p class="text-zinc-500">phack:</p>
+                        <WebringLink type="previous" />
+                        <WebringLink type="main" />
+                        <WebringLink type="next" />
+                    </div>
+                    <div class="w-full hidden md:block">
+                        <!-- <Location client:load /> -->
+                        <Spotify client:load />
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 h-full hidden md:block">
+                <AsciiRenderer resolution={0.25} client:visible />
+            </div>
+        </div>
+    </div>
 </Layout>

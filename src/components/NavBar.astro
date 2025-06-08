@@ -1,0 +1,166 @@
+---
+import { NAVIGATION } from "lib/consts";
+const [home, ...links] = NAVIGATION;
+
+import Logo from "assets/Logo.svg";
+---
+
+<nav
+    class="flex flex-row justify-between items-center w-[98%] max-w-[1588px] z-50"
+>
+    <a
+        href={home!.href}
+        id="logo"
+        class="spin-on-hover"
+        aria-label="Go to home"
+    >
+        <Logo class="w-6 h-6 md:w-[30px] md:h-[30px] darK:invert z-10" />
+    </a>
+    <ul class="flex flex-row items-center justify-end gap-4 md:gap-8">
+        <li>
+            <p
+                class:list={[
+                    "text-xl",
+                    "md:text-2xl",
+                    "text-zinc-500",
+                    "dark:text-zinc-300",
+                    "transition-colors",
+                    "ease-in-out",
+                    "duration-200",
+                    Astro.url.pathname === home!.href && "!text-black",
+                    Astro.url.pathname === home!.href && "dark:!text-white",
+                    Astro.url.pathname !== home!.href && "hover:text-black",
+                    Astro.url.pathname !== home!.href &&
+                        "dark:hover:text-white",
+                ]}
+            >
+                <a href={home!.href}>{home!.name}</a>
+            </p>
+        </li>
+        {
+            links.map(({ name, href }) => (
+                <li>
+                    <p
+                        class:list={[
+                            "text-xl",
+                            "md:text-2xl",
+                            "text-zinc-500",
+                            "dark:text-zinc-300",
+                            "transition-colors",
+                            "ease-in-out",
+                            "duration-200",
+                            Astro.url.pathname.startsWith(href) &&
+                                "!text-black",
+                            Astro.url.pathname.startsWith(href) &&
+                                "dark:!text-white",
+                            !Astro.url.pathname.startsWith(href) &&
+                                "hover:text-black",
+                            !Astro.url.pathname.startsWith(href) &&
+                                "dark:hover:text-white",
+                        ]}
+                    >
+                        <a href={href}>{name}</a>
+                    </p>
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<style>
+    .spin-on-hover svg {
+        transition: none;
+    }
+
+    .hinge {
+        animation: hinge 2s ease-in-out forwards;
+        transform-origin: top left;
+    }
+
+    .rubberBand {
+        animation: rubberBand 1s ease-in-out forwards;
+    }
+
+    @keyframes hinge {
+        0% {
+            transform: rotate3d(0, 0, 1, 0deg);
+        }
+        20%,
+        60% {
+            transform: rotate3d(0, 0, 1, 80deg);
+        }
+        40%,
+        80% {
+            transform: rotate3d(0, 0, 1, 60deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(0, 700px, 0);
+            opacity: 0;
+        }
+    }
+
+    @keyframes rubberBand {
+        0% {
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            transform: scale3d(1.25, 0.75, 1);
+        }
+        40% {
+            transform: scale3d(0.75, 1.25, 1);
+        }
+        50% {
+            transform: scale3d(1.15, 0.85, 1);
+        }
+        65% {
+            transform: scale3d(0.95, 1.05, 1);
+        }
+        75% {
+            transform: scale3d(1.05, 0.95, 1);
+        }
+        100% {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+</style>
+
+<script>
+    const logo = document.getElementById("logo");
+
+    if (!logo) {
+        console.error("Logo element not found");
+        throw new Error("Logo element not found");
+    }
+
+    let timeout: NodeJS.Timeout;
+
+    logo.addEventListener("mouseenter", () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            logo.classList.remove("rubberBand");
+            logo.classList.add("hinge");
+
+            logo.addEventListener("animationend", function handler(e) {
+                if (e.animationName === "hinge") {
+                    logo.removeEventListener("animationend", handler);
+
+                    setTimeout(() => {
+                        logo.classList.remove("hinge");
+                        logo.style.transform = "none";
+                        logo.style.opacity = "1";
+
+                        requestAnimationFrame(() => {
+                            void logo.offsetWidth;
+                            logo.classList.add("rubberBand");
+                        });
+                    }, 1000);
+                }
+            });
+        }, 2000);
+    });
+
+    logo.addEventListener("mouseleave", () => {
+        clearTimeout(timeout);
+    });
+</script>

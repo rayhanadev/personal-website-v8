@@ -1,0 +1,25 @@
+---
+import { actions } from "astro:actions";
+
+const { id } = Astro.props;
+
+const count = Astro.callAction(actions.views.get, { id })
+    .then((res) => {
+        if (res.error) throw res.error;
+        return res;
+    })
+    .then((res) => {
+        return `${res.data} views`;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
+export const prerender = false;
+
+export interface Props {
+    id: string;
+}
+---
+
+<p class="font-serif text-xl md:font-sans md:text-base">{count}</p>

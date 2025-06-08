@@ -1,0 +1,22 @@
+---
+interface Props {
+    href: string;
+}
+
+const { href } = Astro.props;
+const external = href.startsWith("http") || href.startsWith("//");
+---
+
+<a
+    href={href}
+    {...external
+        ? {
+              rel: "noopener",
+              "data-umami-event": "outbound-link-click",
+              "data-umami-event-url": href,
+          }
+        : {}}
+    target="_blank"
+    class="underline underline-offset-2 decoration-1 decoration-zinc-300 hover:decoration-foreground inline"
+    ><slot /></a
+>

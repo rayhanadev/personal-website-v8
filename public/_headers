@@ -1,0 +1,14 @@
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/{open-graph,twitter,blog}/**/*.{png,webp,avif,jpg,jpeg,gif,svg}
+  Cache-Control: public, max-age=31536000, immutable
+
+/api/location
+  Cache-Control: public, max-age=3600, stale-white-revalidate=30
+
+/api/spotify
+  Cache-Control: public, max-age=30, stale-white-revalidate=5

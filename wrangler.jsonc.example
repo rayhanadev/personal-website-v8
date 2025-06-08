@@ -1,0 +1,77 @@
+{
+    "name": "personal-website-v8",
+    "main": "./dist/_worker.js/index.js",
+    "compatibility_date": "2025-05-04",
+    "compatibility_flags": ["nodejs_compat"],
+    "observability": {
+        "enabled": true,
+    },
+    "placement": {
+        "mode": "smart",
+    },
+    "assets": {
+        "binding": "ASSETS",
+        "directory": "./dist",
+    },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "<DATABASE_NAME>",
+            "database_id": "<DATABASE_ID>",
+            "migrations_dir": "migrations/",
+        },
+    ],
+    "vars": {
+        "ENVIRONMENT": "dev",
+    },
+    "env": {
+        "staging": {
+            "workers_dev": false,
+            "routes": [
+                {
+                    "pattern": "<STAGING_DOMAIN>",
+                    "custom_domain": true,
+                },
+            ],
+            "vars": {
+                "ENVIRONMENT": "staging",
+            },
+            "assets": {
+                "binding": "ASSETS",
+                "directory": "./dist",
+            },
+            "d1_databases": [
+                {
+                    "binding": "DB",
+                    "database_name": "<STAGING_DATABASE_NAME>",
+                    "database_id": "<STAGING_DATABASE_ID>",
+                    "migrations_dir": "migrations/",
+                },
+            ],
+        },
+        "production": {
+            "workers_dev": false,
+            "routes": [
+                {
+                    "pattern": "<PROD_DOMAIN>",
+                    "custom_domain": true,
+                },
+            ],
+            "vars": {
+                "ENVIRONMENT": "production",
+            },
+            "assets": {
+                "binding": "ASSETS",
+                "directory": "./dist",
+            },
+            "d1_databases": [
+                {
+                    "binding": "DB",
+                    "database_name": "<PROD_DATABASE_NAME>",
+                    "database_id": "<PROD_DATABASE_ID>",
+                    "migrations_dir": "migrations/",
+                },
+            ],
+        },
+    },
+}

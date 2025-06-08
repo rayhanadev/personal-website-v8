@@ -11,40 +11,52 @@ export const EMAIL_ADDRESS = "me@rayhanadev.com";
 export const PHONE_NUMBER = "+1 (817) 470-7345";
 export const PHONE_NUMBER_RAW = "8174707345";
 export const SOCIALS = {
-  twitter: "https://twitter.com/rayhanadev",
-  github: "https://github.com/rayhanadev",
-  linkedin: "https://www.linkedin.com/in/rayhanadev",
+    x: "https://x.com/rayhanadev",
+    // twitter: "https://twitter.com/rayhanadev",
+    github: "https://github.com/rayhanadev",
+    linkedin: "https://www.linkedin.com/in/rayhanadev",
+    bluesky: "https://bsky.app/profile/rayhanadev.com",
+    threads: "https://www.threads.com/@rayhanadev",
 };
 
 export const JSONLD = {
-  "@context": "http://www.schema.org",
-  "@type": "person",
-  name: FULL_NAME,
-  alternateName: ALIAS,
-  description: "Developer",
-  disambiguatingDescription: "Software Engineer",
-  jobTitle: "Software Engineer",
-  gender: "male",
-  url: import.meta.env.SITE,
-  sameAs: Object.values(SOCIALS),
-  image: "https://www.rayhanadev.com/headshot.png",
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "Texas",
-    addressCountry: "United States of America",
-  },
-  email: EMAIL_ADDRESS,
-  birthDate: "2006-06-24",
+    "@context": "http://www.schema.org",
+    "@type": "person",
+    address: {
+        "@type": "PostalAddress",
+        addressRegion: "Texas",
+        addressCountry: "United States of America",
+    },
+    alternateName: ALIAS,
+    affiliation: {
+        "@type": "Organization",
+        name: "Purdue University",
+        url: "https://purdue.edu/",
+    },
+    birthDate: "2006-06-24",
+    description: "Developer",
+    disambiguatingDescription: "Software Engineer",
+    email: `mailto:${EMAIL_ADDRESS}`,
+    familyName: LAST_NAME,
+    gender: "Male",
+    givenName: FIRST_NAME,
+    honorificPrefix: "Mr",
+    image: "https://www.rayhanadev.com/headshot.png",
+    jobTitle: "Software Engineer",
+    name: FULL_NAME,
+    pronouns: "him/they",
+    sameAs: SOCIALS.x,
+    url: import.meta.env.SITE,
 };
 
 export const NAVIGATION = [
-  { name: "info", href: "/" },
-  { name: "blog", href: "/blog" },
-  { name: "work", href: "/resume" },
+    { name: "home", href: "/" },
+    { name: "blog", href: "/blog" },
+    { name: "work", href: "/work" },
 ];
 
 export const GPG_ENCRYPTION_SUBKEY =
-  "D354 3687 A6E5 B6E7 150A  CB96 86CC 311D 0CA3 0AD9";
+    "D354 3687 A6E5 B6E7 150A  CB96 86CC 311D 0CA3 0AD9";
 export const GPG_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 Comment: 97C7 04C7 6B26 82EB F511  03A5 7A5E 74BF 31C9 B144
 Comment: Rayhan Noufal Arayilakath <me@rayhanadev.com>
@@ -158,4 +170,9 @@ RA==
 =es27
 -----END PGP PUBLIC KEY BLOCK-----`;
 export const SSH_PUBLIC_KEY =
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFbtAqPlddx1IItiYbD1fZcztRw/v4vOLC9IKZfXcbqiAskitIK3XkM3N8gOEFwF7CtrTboB+RIZI72X/Es56bY5QtNLeTc6ENjW1g7v8xHf9hR+JqY1W3H/6/6v4CTVvQzrnqbmbzbBOQTdyOkHK7SrxDbaHlUu8jLQXEyFN7NYfH3QgGJcRpbEWzTmbjVT4ZyEyv2JVkv8OEPb6DCWXD8hn5+/54TdyXW79hoS8SZ4qT2J1lGPYtYE7gZO7vR+eKu7/mkfw5vQ8WghPZCmdnnFJWyhp8rQXTH/qeCZF0U2DG1OCaMeo5LrafmFjsgMAoc26BtN1uUa863MpUfHH9I+DoP5B4ImN1B39JS09rOGnBe9xMWpg2JQariILJjhT0rJgQOq2UpNBhQQd/FDCxZQcz0gDLM1sze4A6kTlzuxXmnjBSDzrzXDkuT8PgPapPRFMC/ffwr6czsgXCbiTZfoochU/NjjN6GrVBs0uvDvyqsAYV1/XMH9osK/FEt5RIlHYNvACCT7TX/vysZgCXfWN60OiQXnfvtzn+JY26sJqT5ZDj9KHIfgYE5SZiJIVFRNfv97IVqsM1HkgD/6fPJOo9gbljuj9Rxe0en70exQi7Iu2y19hGGkE9UJBHOCEejiLatuh7kKQFQQLvWXnUL9qNVylGJKKlAKpa+XnsJQ==";
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFbtAqPlddx1IItiYbD1fZcztRw/v4vOLC9IKZfXcbqiAskitIK3XkM3N8gOEFwF7CtrTboB+RIZI72X/Es56bY5QtNLeTc6ENjW1g7v8xHf9hR+JqY1W3H/6/6v4CTVvQzrnqbmbzbBOQTdyOkHK7SrxDbaHlUu8jLQXEyFN7NYfH3QgGJcRpbEWzTmbjVT4ZyEyv2JVkv8OEPb6DCWXD8hn5+/54TdyXW79hoS8SZ4qT2J1lGPYtYE7gZO7vR+eKu7/mkfw5vQ8WghPZCmdnnFJWyhp8rQXTH/qeCZF0U2DG1OCaMeo5LrafmFjsgMAoc26BtN1uUa863MpUfHH9I+DoP5B4ImN1B39JS09rOGnBe9xMWpg2JQariILJjhT0rJgQOq2UpNBhQQd/FDCxZQcz0gDLM1sze4A6kTlzuxXmnjBSDzrzXDkuT8PgPapPRFMC/ffwr6czsgXCbiTZfoochU/NjjN6GrVBs0uvDvyqsAYV1/XMH9osK/FEt5RIlHYNvACCT7TX/vysZgCXfWN60OiQXnfvtzn+JY26sJqT5ZDj9KHIfgYE5SZiJIVFRNfv97IVqsM1HkgD/6fPJOo9gbljuj9Rxe0en70exQi7Iu2y19hGGkE9UJBHOCEejiLatuh7kKQFQQLvWXnUL9qNVylGJKKlAKpa+XnsJQ==";
+
+export const BLOG_CONTENT_POOL_PATH = path.resolve(
+    process.cwd(),
+    "./src/content/blog",
+);

@@ -1,3 +1,10 @@
+/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+wasm-pack.log
+
 # build output
 dist/
 # generated types
@@ -16,9 +23,18 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.dev.vars
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# wrangler
+.wrangler
+wrangler.jsonc
+
+# blog drafts
+src/content/blog/_*
+src/assets/blog/_*

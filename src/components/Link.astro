@@ -1,0 +1,27 @@
+---
+const { href, external = false, umami, ...props } = Astro.props;
+
+export interface Props {
+    href: string;
+    external?: boolean;
+    umami?: {
+        event: string;
+    };
+    [key: string]: unknown;
+}
+---
+
+<a
+    href={href}
+    {...external
+        ? {
+              rel: "noopener",
+              target: "_blank",
+              "data-umami-event": "outbound-link-click",
+              "data-umami-event-url": href,
+          }
+        : {}}
+    data-umami-event={umami?.event}
+    class={`decoration-1 decoration-zinc-300 hover:decoration-foreground underline underline-offset-2 transition-colors ease-in-out duration-200 inline ${props.class}`}
+    {...props}><slot /></a
+>

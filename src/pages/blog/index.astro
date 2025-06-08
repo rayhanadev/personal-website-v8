@@ -1,0 +1,145 @@
+---
+import { Picture } from "astro:assets";
+import { getCollection, getEntry } from "astro:content";
+
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import utc from "dayjs/plugin/utc";
+
+import Layout from "layouts/Layout.astro";
+
+import NavBar from "components/NavBar.astro";
+import Link from "components/Link.astro";
+
+import { parseDateFromFilePath, isDraft } from "lib/blog";
+
+import noise from "assets/noise.png";
+
+dayjs.extend(utc);
+dayjs.extend(advancedFormat);
+
+const blogEntries = await getCollection("blog");
+
+const slicePreview = (text: string, length: number) => {
+    if (text.length <= length) {
+        if (text.endsWith(".")) return text + "..";
+        return text + "...";
+    }
+
+    const cutIndex = text.lastIndexOf(" ", length);
+    return cutIndex !== -1
+        ? text.slice(0, cutIndex) + "..."
+        : text.slice(0, length) + "...";
+};
+
+const [latest, ...entries] = await getCollection("blog").then((entries) =>
+    entries
+        .map((entry) => {
+            const title = entry.data.title;
+            const description = entry.data.description || "";
+
+            const date = parseDateFromFilePath(entry.filePath!);
+            const formattedDate = dayjs(date).utc().format("MM/DD/YYYY");
+
+            return {
+                id: entry.id,
+                url: `/blog/${entry.id}`,
+                // imageUrl: `/blog/${entry.id}/cover.png`,
+                title: title,
+                preview: slicePreview(description, 185),
+                date: formattedDate,
+                isDraft: isDraft(entry.filePath!),
+            };
+        })
+        .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix()),
+);
+---
+
+<Layout
+    title="Ray Arayilakath - Software Engineer"
+    description="4+ years of experience growing engineering at YC-backed startups 🪴. Researching tech justice at Purdue University. Building ethical and equitable software for the next 10 billion developers."
+>
+    <div
+        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override mt-4 md:mt-8 px-2 md:px-4 mx-auto"
+    >
+        <NavBar />
+        <div
+            class="flex flex-col items-center justify-start w-full h-full mt-4 md:mt-11"
+        >
+            <article
+                class="flex flex-col items-start justify-start w-full gap-4 md:gap-7"
+            >
+                <a
+                    href={latest.url}
+                    class="w-full h-[150px] md:h-[497px] overflow-clip"
+                >
+                    <div
+                        class="relative w-full h-[150px] scale-[200%] md:scale-100 md:w-full md:h-[497px]"
+                    >
+                        <picture
+                            class={`absolute inset-0 w-full h-full ${latest.isDraft === true ? "opacity-50" : ""}`}
+                        >
+                            <source
+                                srcset={`/blog/${latest.id}/cover.avif`}
+                                type="image/avif"
+                            />
+                            <source
+                                srcset={`/blog/${latest.id}/cover.webp`}
+                                type="image/webp"
+                            />
+                            <img
+                                src={`/blog/${latest.id}/cover.png`}
+                                class="w-full h-full object-cover"
+                                decoding="async"
+                                loading="lazy"
+                                alt=""
+                            />
+                        </picture>
+                    </div>
+                </a>
+                <div
+                    class="flex flex-col items-start justify-start w-full md:gap-2"
+                >
+                    <h2
+                        class={`font-serif text-3xl md:text-5xl ${latest.isDraft === true ? "opacity-50" : ""}`}
+                    >
+                        Latest: {latest.title}
+                    </h2>
+                    <p
+                        class={`w-full text-lg md:text-2xl ${latest.isDraft === true ? "opacity-50" : ""}`}
+                    >
+                        {latest.preview}{" "}<Link href={latest.url}
+                            >read more</Link
+                        >.
+                    </p>
+                </div>
+            </article>
+            <div
+                class="flex flex-col items-start justify-start gap-2 md:gap-6 w-full mt-24 md:mt-14"
+            >
+                {
+                    entries.map(({ title, date, url, isDraft }) => (
+                        <a href={url} class="w-full">
+                            <div
+                                class={`flex flex-row items-start justify-between w-full ${isDraft === true ? "opacity-50" : ""}`}
+                            >
+                                <h2 class="font-serif text-3xl md:text-5xl">
+                                    {title}
+                                </h2>
+                                <time
+                                    class="font-serif text-3xl md:text-5xl"
+                                    datetime={date
+                                        .split("/")
+                                        .reverse()
+                                        .join("-")}
+                                >
+                                    {date}
+                                </time>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -3,14 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
+@theme inline {
     --font-sans:
-        "GeneralSans", ui-sans-serif, system-ui, sans-serif,
+        var(--font-general-sans), ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
     --font-serif:
-        "InstrumentSerif", ui-serif, Georgia, Cambria, "Times New Roman", Times,
-        serif;
+        var(--font-instrument-serif), ui-serif, Georgia, Cambria,
+        "Times New Roman", Times, serif;
+    --font-mono:
+        var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
@@ -142,37 +145,5 @@
         @media (min-width: 1024px) {
             scrollbar-gutter: stable;
         }
-    }
-
-    @font-face {
-        font-family: "GeneralSans";
-        src: url("/fonts/GeneralSans-Variable.woff2") format("woff2");
-        font-weight: 200 700;
-        font-style: normal;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "GeneralSans";
-        src: url("/fonts/GeneralSans-VariableItalic.woff2") format("woff2");
-        font-weight: 200 700;
-        font-style: italic;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "InstrumentSerif";
-        src: url("/fonts/InstrumentSerif-Regular.woff2") format("woff2");
-        font-weight: 200 700;
-        font-style: normal;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "InstrumentSerif";
-        src: url("/fonts/InstrumentSerif-Italic.woff2") format("woff2");
-        font-weight: 200 700;
-        font-style: italic;
-        font-display: swap;
     }
 }

@@ -1,0 +1,181 @@
+---
+import { Picture } from "astro:assets";
+import { getCollection, render } from "astro:content";
+
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import utc from "dayjs/plugin/utc";
+
+import Layout from "layouts/PostLayout.astro";
+
+import NavBar from "components/NavBar.astro";
+import Blockquote from "components/Blog/Blockquote.astro";
+import H1 from "components/Blog/H1.astro";
+import H2 from "components/Blog/H2.astro";
+import H3 from "components/Blog/H3.astro";
+import H4 from "components/Blog/H4.astro";
+import Hr from "components/Blog/Hr.astro";
+import Image from "components/Blog/Image.astro";
+import Link from "components/Blog/Link.astro";
+import OrderedList from "components/Blog/OrderedList.astro";
+import Strong from "components/Blog/Strong.astro";
+import UnorderedList from "components/Blog/UnorderedList.astro";
+import Views from "components/Views.astro";
+
+import { parseDateFromFilePath } from "lib/blog";
+
+import noise from "assets/noise.png";
+import headshot from "assets/blog/headshot.png";
+
+const { entry } = Astro.props;
+
+dayjs.extend(utc);
+dayjs.extend(advancedFormat);
+
+const date = parseDateFromFilePath(entry.filePath!);
+const { Content } = await render(entry);
+
+export async function getStaticPaths() {
+    const blogEntries = await getCollection("blog");
+
+    return blogEntries
+        .filter((entry) => {
+            if (import.meta.env.DEV) return true;
+            return !entry.id.startsWith("_");
+        })
+        .map((entry) => {
+            const date = parseDateFromFilePath(entry.filePath!);
+
+            return {
+                params: { id: entry.id },
+                props: {
+                    entry: {
+                        ...entry,
+                        data: {
+                            ...entry.data,
+                            date,
+                        },
+                    },
+                },
+            };
+        });
+}
+---
+
+<Layout
+    id={entry.id}
+    title={entry.data.title}
+    description={entry.data.description}
+    tags={entry.data.tags}
+    date={entry.data.date}
+>
+    <div
+        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override mt-4 md:mt-8 px-2 md:px-4 mx-auto"
+    >
+        <NavBar />
+        <article
+            class="flex flex-col items-center justify-start w-full h-full mt-4 md:mt-11"
+        >
+            <div class="flex flex-col items-start justify-start w-full gap-7">
+                <!-- <Picture
+                    src={`/blog/${entry.id}/cover.png`}
+                    class="dark:invert"
+                    formats={["avif", "webp"]}
+                    width="1588"
+                    height="497"
+                    alt=""
+                /> -->
+                <a
+                    href={`/blog/${entry.id}`}
+                    class="w-full h-[150px] md:h-[497px] overflow-clip"
+                >
+                    <div
+                        class="relative w-full h-[150px] scale-[200%] md:scale-100 md:w-full md:h-[497px]"
+                    >
+                        <picture class="absolute inset-0 w-full h-full">
+                            <source
+                                srcset={`/blog/${entry.id}/cover.avif`}
+                                type="image/avif"
+                            />
+                            <source
+                                srcset={`/blog/${entry.id}/cover.webp`}
+                                type="image/webp"
+                            />
+                            <img
+                                src={`/blog/${entry.id}/cover.png`}
+                                class="w-full h-full object-cover"
+                                decoding="async"
+                                loading="lazy"
+                                alt=""
+                            />
+                        </picture>
+                    </div>
+                </a>
+                <div
+                    class="flex flex-col items-start justify-start w-full max-w-[1200px] mx-auto gap-4 md:gap-0"
+                >
+                    <div
+                        class="flex flex-col md:flex-row items-start justify-between w-full gap-1 md:gap-0"
+                    >
+                        <h2 class="font-serif text-3xl md:text-5xl">
+                            {entry.data.title}
+                        </h2>
+                        <div
+                            class="flex flex-row md:flex-col items-center md:items-end justify-start gap-2 md:gap-0"
+                        >
+                            <time class="font-serif text-xl md:text-4xl"
+                                >{dayjs(date).utc().format("MM/DD/YYYY")}</time
+                            >
+                            <p class="block md:hidden">◦</p>
+                            <Views id={entry.id} server:defer>
+                                <p slot="fallback">views</p>
+                            </Views>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-row items-center justify-start gap-2 md:gap-6"
+                    >
+                        <Picture
+                            src={headshot}
+                            class="w-8 h-8 md:w-12 md:h-12 rounded-full"
+                            formats={["avif", "webp"]}
+                            loading="lazy"
+                            alt=""
+                        />
+                        <p class="text-sans text-lg md:text-3xl">
+                            Ray Arayilakath
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col items-start justify-start prose-sm lg:prose prose-zinc text-lg lg:text-[24px] w-full max-w-[1200px] gap-5 mt-14"
+            >
+                <Content
+                    components={{
+                        a: Link,
+                        blockquote: Blockquote,
+                        h1: H1,
+                        h2: H2,
+                        h3: H3,
+                        h4: H4,
+                        hr: Hr,
+                        img: Image,
+                        ol: OrderedList,
+                        strong: Strong,
+                        ul: UnorderedList,
+                    }}
+                />
+                <div class="pb-16"></div>
+            </div>
+        </article>
+    </div>
+    <script>
+        import { actions } from "astro:actions";
+
+        const id = window.location.pathname
+            .replace("/blog/", "")
+            .replace("/", "");
+        await actions.views.update({ id });
+    </script>
+</Layout>

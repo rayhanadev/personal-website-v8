@@ -1,6 +1,7 @@
 ---
 import { PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
 import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
 
 import { Head } from "astro-capo";
 import { SEO } from "astro-seo";
@@ -26,7 +27,7 @@ export interface Props {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scrollbar-override">
     <Head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,6 +54,10 @@ export interface Props {
             href="/apple-touch-icon.png"
         />
 
+        <Font cssVariable="--font-instrument-serif" preload />
+        <Font cssVariable="--font-general-sans" preload />
+        <Font cssVariable="--font-geist-mono" preload />
+
         <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-title" content="rayhanadev" />
         <link rel="manifest" href="/manifest.json" />
@@ -78,16 +83,16 @@ export interface Props {
                     siteName: "rayhanadev.com",
                 },
                 image: {
-                    alt: "Ray's cover image, with the text: Fullstack Web Developer and Software Engineer. Contact me at me@rayhanadev.com.",
+                    alt: "Cover image, with the text: Ray Arayilakath. President at Purdue Hackers.",
                     type: "image/png",
                 },
             }}
             twitter={{
                 title: twitter?.title ?? title,
                 description: twitter?.description ?? description,
-                image: `${import.meta.env.SITE}/opengraph.png`,
+                image: `${import.meta.env.SITE}/twitter.png`,
                 imageAlt:
-                    "Ray's cover image, with the text: Fullstack Web Developer and Software Engineer. Contact me at me@rayhanadev.com.",
+                    "Cover image, with the text: Ray Arayilakath. President at Purdue Hackers.",
                 card: "summary_large_image",
                 site: "rayhanadev",
                 creator: "rayhanadev",

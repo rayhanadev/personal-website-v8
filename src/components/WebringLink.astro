@@ -1,0 +1,26 @@
+---
+import Link from "./Link.astro";
+
+const { type } = Astro.props;
+
+const WEBRING_HOSTNAME = "https://ring.purduehackers.com";
+
+const host = new URL(import.meta.env.SITE).hostname;
+const url =
+    type === "main"
+        ? new URL("/", WEBRING_HOSTNAME)
+        : new URL(`/${type}?host=${host}`, WEBRING_HOSTNAME);
+
+const href = url.toString();
+
+export interface Props {
+    type: "next" | "previous" | "main" | "random";
+}
+---
+
+<Link
+    external
+    href={href}
+    class="text-zinc-500 decoration-zinc-300 hover:decoration-zinc-500"
+    >{`[${type.slice(0, 4)}]`}</Link
+>
