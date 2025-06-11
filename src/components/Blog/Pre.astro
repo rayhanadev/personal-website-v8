@@ -1,0 +1,14 @@
+---
+interface Props {
+    class: string;
+    style: Record<string, string>;
+    tabindex: number;
+    "data-language": string;
+}
+
+const { class: _c, ...props } = Astro.props;
+---
+
+<pre
+    {...props}
+    class={`${Astro.props.class} w-full overflow-x-auto font-mono text-sm p-2`}><code><slot /></code></pre>

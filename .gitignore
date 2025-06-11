@@ -36,5 +36,6 @@ pnpm-debug.log*
 wrangler.jsonc
 
 # blog drafts
+.obsidian
 src/content/blog/_*
 src/assets/blog/_*

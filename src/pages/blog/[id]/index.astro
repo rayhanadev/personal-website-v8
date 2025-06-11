@@ -10,6 +10,7 @@ import Layout from "layouts/PostLayout.astro";
 
 import NavBar from "components/NavBar.astro";
 import Blockquote from "components/Blog/Blockquote.astro";
+import Code from "components/Blog/Code.astro";
 import H1 from "components/Blog/H1.astro";
 import H2 from "components/Blog/H2.astro";
 import H3 from "components/Blog/H3.astro";
@@ -18,6 +19,7 @@ import Hr from "components/Blog/Hr.astro";
 import Image from "components/Blog/Image.astro";
 import Link from "components/Blog/Link.astro";
 import OrderedList from "components/Blog/OrderedList.astro";
+import Pre from "components/Blog/Pre.astro";
 import Strong from "components/Blog/Strong.astro";
 import UnorderedList from "components/Blog/UnorderedList.astro";
 import Views from "components/Views.astro";
@@ -149,12 +151,13 @@ export async function getStaticPaths() {
                 </div>
             </div>
             <div
-                class="flex flex-col items-start justify-start prose-sm lg:prose prose-zinc text-lg lg:text-[24px] w-full max-w-[1200px] gap-5 mt-14"
+                class="flex flex-col items-start justify-start prose-sm lg:prose prose-zinc text-lg lg:text-xl w-full md:max-w-[1200px] gap-5 mt-14"
             >
                 <Content
                     components={{
                         a: Link,
                         blockquote: Blockquote,
+                        code: Code,
                         h1: H1,
                         h2: H2,
                         h3: H3,
@@ -162,6 +165,7 @@ export async function getStaticPaths() {
                         hr: Hr,
                         img: Image,
                         ol: OrderedList,
+                        pre: Pre,
                         strong: Strong,
                         ul: UnorderedList,
                     }}

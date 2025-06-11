@@ -1,16 +1,20 @@
 ---
 interface Props {
-    caption: string;
+    caption?: string;
 }
 
 const { caption } = Astro.props;
 ---
 
 <figure>
-    <div class="flex flex-row items-center justify-center w-full">
+    <div
+        class="flex flex-row items-center justify-center w-full md:max-w-2/3 mx-auto"
+    >
         <slot />
     </div>
-    <figcaption class="text-base w-1/2 mx-auto text-center">
-        {caption}
+    <figcaption class="text-base w-2/3 mx-auto text-center">
+        <slot name="caption">
+            {caption}
+        </slot>
     </figcaption>
 </figure>

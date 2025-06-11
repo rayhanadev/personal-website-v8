@@ -78,6 +78,11 @@ export default defineConfig({
             ],
         },
     },
+    markdown: {
+        shikiConfig: {
+            theme: "one-light",
+        },
+    },
     server: {
         port: 3000,
     },
