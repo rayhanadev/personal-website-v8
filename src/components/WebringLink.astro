@@ -18,9 +18,11 @@ export interface Props {
 }
 ---
 
-<Link
-    external
+<a
     href={href}
-    class="text-zinc-500 decoration-zinc-300 hover:decoration-zinc-500"
-    >{`[${type.slice(0, 4)}]`}</Link
+    rel="noopener"
+    data-umami-event="webring-link-click"
+    data-umami-event-url={href}
+    class="decoration-1 decoration-zinc-300 hover:decoration-zinc-500 underline underline-offset-2 transition-colors ease-in-out duration-200 inline text-zinc-500"
+    >{`[${type.slice(0, 4)}]`}</a
 >
