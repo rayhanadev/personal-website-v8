@@ -15,7 +15,7 @@ export const SOCIALS = {
 	// twitter: "https://twitter.com/rayhanadev",
 	github: "https://github.com/rayhanadev",
 	linkedin: "https://www.linkedin.com/in/rayhanadev",
-	// bluesky: "https://bsky.app/profile/rayhanadev.com",
+	bluesky: "https://bsky.app/profile/rayhanadev.com",
 	threads: "https://www.threads.com/@rayhanadev",
 };
 
