@@ -1,0 +1,9 @@
+[install]
+# Set environment variables for native module compilation
+# This ensures C++20 support for packages like gl that require it
+
+[env]
+CC = "/opt/homebrew/opt/llvm@20/bin/clang"
+CXX = "/opt/homebrew/opt/llvm@20/bin/clang++"
+CPPFLAGS = "-I/opt/homebrew/opt/llvm@20/include"
+LDFLAGS = "-L/opt/homebrew/opt/llvm@20/lib"

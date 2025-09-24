@@ -1,7 +1,7 @@
 ---
-index: 7
+index: 6
 company: Tech Justice Lab
-title: Policy Researcher
+title: AI Researcher
 team: null
 vertical: Research
 employment: internship
@@ -10,7 +10,7 @@ end: May 2025
 current: false
 location: West Lafayette, IN
 locationType: on-site
-description: The Tech Justice Lab is a research group at Purdue University that studies the social implications of technology. I am conducting research on global misinformation and disinformation campaigns affecting marginalized communities and soft-power strategies that governments use to influence public opinion.
+description: The Tech Justice Lab is a research group at Purdue University that studies the social implications of technology. I conducted research on agent behaviors that complement, foster, and enhance human experiences.
 skills:
   - research
   - literature reviews

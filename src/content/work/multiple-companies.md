@@ -6,7 +6,7 @@ team: null
 vertical: null
 employment: freelance
 start: Sep 2022
-end: Jan 2023
+end: Mar 2023
 current: false
 location: Dallas, TX
 locationType: hybrid

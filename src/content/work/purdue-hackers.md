@@ -1,5 +1,5 @@
 ---
-index: 9
+index: 8
 company: Purdue Hackers
 title: President
 team: null

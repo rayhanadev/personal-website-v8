@@ -1,12 +1,12 @@
 ---
 index: 1
 company: Deel
-title: Software Engineer
+title: Software Engineering Intern
 team: Marketing
 vertical: FinTech
-employment: freelance
+employment: internship
 start: Sep 2022
-end: Sep 2022
+end: Dec 2022
 current: false
 location: San Francisco, CA
 locationType: remote
