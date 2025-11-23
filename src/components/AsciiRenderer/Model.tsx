@@ -24,7 +24,7 @@ export function Model() {
             if (
                 !window.matchMedia("(prefers-reduced-motion: reduce)").matches
             ) {
-                ref.current.rotation.z -= delta / 5;
+                ref.current.rotation.z += delta / 5;
             }
         }
     });
