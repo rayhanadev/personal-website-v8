@@ -29,8 +29,8 @@ export const spotify = {
                 !playback ||
                 !playback.item ||
                 !playback.is_playing ||
-                !isTrack(playback.item) ||
-                playback.item.explicit
+                !isTrack(playback.item)
+                // playback.item.explicit
             ) {
                 return null;
             }
