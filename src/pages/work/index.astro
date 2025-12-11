@@ -1,15 +1,12 @@
 ---
 import { getCollection } from "astro:content";
-
-import Layout from "layouts/Layout.astro";
-
-import NavBar from "components/NavBar.astro";
 import Link from "components/Link.astro";
 
+import NavBar from "components/NavBar.astro";
+import Layout from "layouts/Layout.astro";
+
 const entries = await getCollection("work").then((entries) =>
-    entries
-        .map((entry) => ({ ...entry.data }))
-        .sort((a, b) => b.index - a.index),
+	entries.map((entry) => ({ ...entry.data })).sort((a, b) => b.index - a.index),
 );
 ---
 

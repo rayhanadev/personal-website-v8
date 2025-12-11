@@ -1,57 +1,49 @@
 ---
-import { Picture } from "astro:assets";
-import { getCollection, getEntry } from "astro:content";
-
+import { getCollection } from "astro:content";
+import Link from "components/Link.astro";
+import NavBar from "components/NavBar.astro";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import utc from "dayjs/plugin/utc";
-
 import Layout from "layouts/Layout.astro";
 
-import NavBar from "components/NavBar.astro";
-import Link from "components/Link.astro";
-
-import { parseDateFromFilePath, isDraft } from "lib/blog";
-
-import noise from "assets/noise.png";
+import { isDraft, parseDateFromFilePath } from "lib/blog";
 
 dayjs.extend(utc);
 dayjs.extend(advancedFormat);
 
-const blogEntries = await getCollection("blog");
-
 const slicePreview = (text: string, length: number) => {
-    if (text.length <= length) {
-        if (text.endsWith(".")) return text + "..";
-        return text + "...";
-    }
+	if (text.length <= length) {
+		if (text.endsWith(".")) return text + "..";
+		return text + "...";
+	}
 
-    const cutIndex = text.lastIndexOf(" ", length);
-    return cutIndex !== -1
-        ? text.slice(0, cutIndex) + "..."
-        : text.slice(0, length) + "...";
+	const cutIndex = text.lastIndexOf(" ", length);
+	return cutIndex !== -1
+		? text.slice(0, cutIndex) + "..."
+		: text.slice(0, length) + "...";
 };
 
 const [latest, ...entries] = await getCollection("blog").then((entries) =>
-    entries
-        .map((entry) => {
-            const title = entry.data.title;
-            const description = entry.data.description || "";
+	entries
+		.map((entry) => {
+			const title = entry.data.title;
+			const description = entry.data.description || "";
 
-            const date = parseDateFromFilePath(entry.filePath!);
-            const formattedDate = dayjs(date).utc().format("MM/DD/YYYY");
+			const date = parseDateFromFilePath(entry.filePath!);
+			const formattedDate = dayjs(date).utc().format("MM/DD/YYYY");
 
-            return {
-                id: entry.id,
-                url: `/blog/${entry.id}`,
-                // imageUrl: `/blog/${entry.id}/cover.png`,
-                title: title,
-                preview: slicePreview(description, 185),
-                date: formattedDate,
-                isDraft: isDraft(entry.filePath!),
-            };
-        })
-        .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix()),
+			return {
+				id: entry.id,
+				url: `/blog/${entry.id}`,
+				// imageUrl: `/blog/${entry.id}/cover.png`,
+				title: title,
+				preview: slicePreview(description, 185),
+				date: formattedDate,
+				isDraft: isDraft(entry.filePath!),
+			};
+		})
+		.sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix()),
 );
 ---
 

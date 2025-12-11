@@ -1,28 +1,28 @@
 ---
+import { Font } from "astro:assets";
 import { PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
 import { ClientRouter } from "astro:transitions";
-import { Font } from "astro:assets";
 
 import { Head } from "astro-capo";
 import { SEO } from "astro-seo";
 
-import { FULL_NAME, EMAIL_ADDRESS, JSONLD } from "lib/consts";
+import { EMAIL_ADDRESS, FULL_NAME, JSONLD } from "lib/consts";
 
 import "styles/global.css";
 
 const { title, description, og, twitter } = Astro.props;
 
 export interface Props {
-    title: string;
-    description: string;
-    og?: {
-        title: string;
-        description: string;
-    };
-    twitter?: {
-        title: string;
-        description: string;
-    };
+	title: string;
+	description: string;
+	og?: {
+		title: string;
+		description: string;
+	};
+	twitter?: {
+		title: string;
+		description: string;
+	};
 }
 ---
 

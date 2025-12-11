@@ -1,14 +1,14 @@
 import type { APIRoute } from "astro";
 import {
-    ALIAS,
-    EMAIL_ADDRESS,
-    FIRST_NAME,
-    FULL_NAME,
-    LAST_NAME,
-    NICKNAME,
-    PHONE_NUMBER_RAW,
-    SOCIALS,
-    TITLE,
+	ALIAS,
+	EMAIL_ADDRESS,
+	FIRST_NAME,
+	FULL_NAME,
+	LAST_NAME,
+	NICKNAME,
+	PHONE_NUMBER_RAW,
+	SOCIALS,
+	TITLE,
 } from "lib/consts";
 
 const vcf = `
@@ -35,10 +35,10 @@ END:VCARD
 `.trim();
 
 export const GET: APIRoute = () => {
-    return new Response(vcf, {
-        headers: {
-            "Content-Type": "text/vcard; charset=utf-8",
-            "Contact-Disposition": "attachment; filename=contact.vcf",
-        },
-    });
+	return new Response(vcf, {
+		headers: {
+			"Content-Type": "text/vcard; charset=utf-8",
+			"Contact-Disposition": "attachment; filename=contact.vcf",
+		},
+	});
 };

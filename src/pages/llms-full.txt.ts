@@ -1,5 +1,5 @@
-import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import type { APIRoute } from "astro";
 
 const entries = await getCollection("blog");
 
@@ -97,14 +97,14 @@ For inquiries or collaboration opportunities, connect with him at rayhan@purdue.
 ## Blog Posts
 
 ${entries.map(({ body }) => {
-  return `==========\n${body}\n==========\n\n`;
+	return `==========\n${body}\n==========\n\n`;
 })}
 `.trim();
 
 export const GET: APIRoute = () => {
-  return new Response(llmsTxt, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-    },
-  });
+	return new Response(llmsTxt, {
+		headers: {
+			"Content-Type": "text/plain; charset=utf-8",
+		},
+	});
 };

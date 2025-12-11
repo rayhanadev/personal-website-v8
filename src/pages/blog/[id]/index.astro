@@ -1,14 +1,7 @@
 ---
 import { Picture } from "astro:assets";
 import { getCollection, render } from "astro:content";
-
-import dayjs from "dayjs";
-import advancedFormat from "dayjs/plugin/advancedFormat";
-import utc from "dayjs/plugin/utc";
-
-import Layout from "layouts/PostLayout.astro";
-
-import NavBar from "components/NavBar.astro";
+import headshot from "assets/blog/headshot.png";
 import Blockquote from "components/Blog/Blockquote.astro";
 import Code from "components/Blog/Code.astro";
 import H1 from "components/Blog/H1.astro";
@@ -22,12 +15,13 @@ import OrderedList from "components/Blog/OrderedList.astro";
 import Pre from "components/Blog/Pre.astro";
 import Strong from "components/Blog/Strong.astro";
 import UnorderedList from "components/Blog/UnorderedList.astro";
+import NavBar from "components/NavBar.astro";
 import Views from "components/Views.astro";
-
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import utc from "dayjs/plugin/utc";
+import Layout from "layouts/PostLayout.astro";
 import { parseDateFromFilePath } from "lib/blog";
-
-import noise from "assets/noise.png";
-import headshot from "assets/blog/headshot.png";
 
 const { entry } = Astro.props;
 
@@ -38,29 +32,29 @@ const date = parseDateFromFilePath(entry.filePath!);
 const { Content } = await render(entry);
 
 export async function getStaticPaths() {
-    const blogEntries = await getCollection("blog");
+	const blogEntries = await getCollection("blog");
 
-    return blogEntries
-        .filter((entry) => {
-            if (import.meta.env.DEV) return true;
-            return !entry.id.startsWith("_");
-        })
-        .map((entry) => {
-            const date = parseDateFromFilePath(entry.filePath!);
+	return blogEntries
+		.filter((entry) => {
+			if (import.meta.env.DEV) return true;
+			return !entry.id.startsWith("_");
+		})
+		.map((entry) => {
+			const date = parseDateFromFilePath(entry.filePath!);
 
-            return {
-                params: { id: entry.id },
-                props: {
-                    entry: {
-                        ...entry,
-                        data: {
-                            ...entry.data,
-                            date,
-                        },
-                    },
-                },
-            };
-        });
+			return {
+				params: { id: entry.id },
+				props: {
+					entry: {
+						...entry,
+						data: {
+							...entry.data,
+							date,
+						},
+					},
+				},
+			};
+		});
 }
 ---
 

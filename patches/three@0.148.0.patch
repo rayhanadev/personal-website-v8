@@ -1,0 +1,13 @@
+diff --git a/examples/jsm/effects/AsciiEffect.js b/examples/jsm/effects/AsciiEffect.js
+index af5eb7f02ef43ac917deed955e27cc19f46914d6..f011afe39b0c56956dfb29f01dfb5a07b3c27b13 100644
+--- a/examples/jsm/effects/AsciiEffect.js
++++ b/examples/jsm/effects/AsciiEffect.js
+@@ -96,7 +96,7 @@ class AsciiEffect {
+ 
+ 		const aDefaultCharList = ( ' .,:;i1tfLCG08@' ).split( '' );
+ 		const aDefaultColorCharList = ( ' CGO08@' ).split( '' );
+-		const strFont = 'courier new, monospace';
++		const strFont = 'var(--font-mono)';
+ 
+ 		const oCanvasImg = renderer.domElement;
+ 

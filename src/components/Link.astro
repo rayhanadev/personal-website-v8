@@ -2,12 +2,12 @@
 const { href, external = false, umami, ...props } = Astro.props;
 
 export interface Props {
-    href: string;
-    external?: boolean;
-    umami?: {
-        event: string;
-    };
-    [key: string]: unknown;
+	href: string;
+	external?: boolean;
+	umami?: {
+		event: string;
+	};
+	[key: string]: unknown;
 }
 ---
 

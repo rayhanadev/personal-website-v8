@@ -3,14 +3,19 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import playformCompress from "@playform/compress";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
+import gabAstroCompress from "gab-astro-compress";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeCodeTitles from "rehype-code-titles";
+import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
+import remarkMath from "remark-math";
 import { visualizer } from "rollup-plugin-visualizer";
 import glsl from "vite-plugin-glsl";
 import { schema } from "./env.ts";
 
-const DEV = process.env.NODE_ENV! !== "production";
+const DEV = process.env.NODE_ENV !== "production";
 const SITE =
 	process.env.NODE_ENV === "production"
 		? "https://www.rayhanadev.com"
@@ -47,16 +52,25 @@ export default defineConfig({
 		}),
 		react(),
 		mdx(),
-		playformCompress({
-			Logger: 1,
-		}),
+		gabAstroCompress(),
 	],
 	vite: {
 		build: {
 			sourcemap: true,
+			rollupOptions: {
+				output: {
+					manualChunks(id) {
+						if (id.includes("node_modules/three/")) {
+							return "three";
+						}
+					},
+				},
+			},
 		},
 		plugins: [
+			// @ts-expect-error: mismatch between astro and vite types
 			glsl(),
+			// @ts-expect-error: mismatch between astro and vite types
 			tailwindcss(),
 			DEV &&
 				visualizer({
@@ -78,6 +92,13 @@ export default defineConfig({
 		shikiConfig: {
 			theme: "one-light",
 		},
+		rehypePlugins: [
+			rehypeSlug,
+			rehypeAutolinkHeadings,
+			rehypeCodeTitles,
+			rehypeKatex,
+		],
+		remarkPlugins: [remarkMath],
 	},
 	server: {
 		port: 3000,

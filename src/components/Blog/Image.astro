@@ -2,9 +2,9 @@
 import { Picture } from "astro:assets";
 
 interface Props {
-    src: ImageMetadata;
-    alt: string;
-    gif?: boolean;
+	src: ImageMetadata;
+	alt: string;
+	gif?: boolean;
 }
 
 const { src, alt, gif = false } = Astro.props;
