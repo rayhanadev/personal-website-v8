@@ -19,9 +19,9 @@ const BLOG_CUSTOM_DATA = `
 <generator>@astrojs/rss</generator>
 <image>
   <link>https://www.rayhanadev.com/</link>
-  <title>Ray's Digital Garden 🪴</title>
+  <title>Ray's Blog 🪴</title>
   <url>https://www.rayhanadev.com/favicon-96x96.png</url>
-  <description>Various pieces written and composed by Ray, related to software engineering and life.</description>
+  <description>Various essays written by Ray, related to software engineering and life.</description>
   <height>96</height>
   <width>96</width>
 </image>
@@ -39,9 +39,9 @@ export const GET: APIRoute = async () => {
 		xmlns: {
 			atom: "http://www.w3.org/2005/Atom",
 		},
-		title: "Ray's Digital Garden 🪴",
+		title: "Ray's Blog 🪴",
 		description:
-			"Various pieces written and composed by Ray, related to software engineering and life.",
+			"Various essays written by Ray, related to software engineering and life.",
 		site: import.meta.env.SITE,
 		customData: BLOG_CUSTOM_DATA,
 		items: await Promise.all(
