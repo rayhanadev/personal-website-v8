@@ -1,25 +1,30 @@
-import { useEffect, useRef } from "react";
-import {
-	AmbientLight,
-	DoubleSide,
-	Mesh,
-	MeshStandardMaterial,
-	NoToneMapping,
-	PerspectiveCamera,
-	PointLight,
-	Scene,
-	WebGLRenderer,
-} from "three";
-import { AsciiEffect } from "three/examples/jsm/effects/AsciiEffect.js";
-import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+---
+interface Props {
+	resolution: number;
+}
 
-export default function AsciiRenderer({ resolution }: { resolution: number }) {
-	const containerRef = useRef<HTMLDivElement>(null);
+const { resolution } = Astro.props;
+---
 
-	useEffect(() => {
-		if (!containerRef.current) return;
+<div class="ascii-renderer w-full h-full" data-resolution={resolution}></div>
 
-		const container = containerRef.current;
+<script>
+	import {
+		AmbientLight,
+		DoubleSide,
+		Mesh,
+		MeshStandardMaterial,
+		NoToneMapping,
+		PerspectiveCamera,
+		PointLight,
+		Scene,
+		WebGLRenderer,
+	} from "three";
+	import { AsciiEffect } from "three/examples/jsm/effects/AsciiEffect.js";
+	import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+
+	function initAsciiRenderer(container: HTMLElement) {
+		const resolution = Number(container.dataset.resolution) || 0.15;
 		const width = container.clientWidth;
 		const height = container.clientHeight;
 
@@ -108,7 +113,7 @@ export default function AsciiRenderer({ resolution }: { resolution: number }) {
 		};
 		window.addEventListener("resize", handleResize);
 
-		// Cleanup
+		// Return cleanup function
 		return () => {
 			cancelAnimationFrame(animationId);
 			window.removeEventListener("resize", handleResize);
@@ -117,7 +122,28 @@ export default function AsciiRenderer({ resolution }: { resolution: number }) {
 			material.dispose();
 			if (mesh) mesh.geometry.dispose();
 		};
-	}, [resolution]);
+	}
 
-	return <div ref={containerRef} className="w-full h-full" />;
-}
+	// Use IntersectionObserver to lazy load the renderer
+	const containers = document.querySelectorAll<HTMLElement>(".ascii-renderer");
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					const container = entry.target as HTMLElement;
+					observer.unobserve(container);
+					initAsciiRenderer(container);
+				}
+			}
+		},
+		{
+			rootMargin: "50px",
+			threshold: 0,
+		},
+	);
+
+	for (const container of containers) {
+		observer.observe(container);
+	}
+</script>

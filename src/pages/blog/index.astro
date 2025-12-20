@@ -52,7 +52,7 @@ const [latest, ...entries] = await getCollection("blog").then((entries) =>
     description="Platform Engineer @ Million (YC W24) 🪴. Previously at Replit, Deel. 4+ years of experience growing engineering at YC-backed startups. Building ethical and equitable software for the next 10 billion developers."
 >
     <div
-        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override mt-4 md:mt-8 px-2 md:px-4 mx-auto"
+        class="flex flex-col items-center justify-start max-w-397 h-full w-full scrollbar-override mt-4 md:mt-8 px-2 md:px-4 mx-auto"
     >
         <NavBar />
         <div
@@ -63,10 +63,10 @@ const [latest, ...entries] = await getCollection("blog").then((entries) =>
             >
                 <a
                     href={latest.url}
-                    class="w-full h-[150px] md:h-[497px] overflow-clip"
+                    class="w-full h-37.5 md:h-124.25 overflow-clip"
                 >
                     <div
-                        class="relative w-full h-[150px] scale-[200%] md:scale-100 md:w-full md:h-[497px]"
+                        class="relative w-full h-37.5 scale-[200%] md:scale-100 md:w-full md:h-124.25"
                     >
                         <picture
                             class={`absolute inset-0 w-full h-full ${latest.isDraft === true ? "opacity-50" : ""}`}

@@ -10,7 +10,7 @@ export default function Location() {
 	if (error) return null;
 	if (!data)
 		return (
-			<p className="mb-[1px] text-zinc-200 dark:text-zinc-300">
+			<p className="mb-1px text-zinc-200 dark:text-zinc-300">
 				{"█".repeat(20)} :)
 			</p>
 		);

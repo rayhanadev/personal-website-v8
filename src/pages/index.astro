@@ -1,7 +1,7 @@
 ---
 import Header from "assets/Header.svg";
 
-import AsciiRenderer from "components/AsciiRenderer";
+import AsciiRenderer from "components/AsciiRenderer/index.astro";
 import Link from "components/Link.astro";
 import NavBar from "components/NavBar.astro";
 import Socials from "components/Socials.astro";
@@ -16,13 +16,13 @@ import Layout from "layouts/Layout.astro";
     description="Platform Engineer @ Million (YC W24) 🪴. Previously at Replit, Deel. 4+ years of experience growing engineering at YC-backed startups. Building ethical and equitable software for the next 10 billion developers."
 >
     <div
-        class="flex flex-col items-center justify-start max-w-[1588px] h-full w-full scrollbar-override md:overflow-y-clip mt-4 md:mt-8 px-2 md:px-4 mx-auto"
+        class="flex flex-col items-center justify-start max-w-397 h-full w-full scrollbar-override md:overflow-y-clip mt-4 md:mt-8 px-2 md:px-4 mx-auto"
     >
         <NavBar />
-        <Header class="w-full md:min-h-[181px] -mt-8 md:mt-9 dark:invert" />
+        <Header class="w-full md:min-h-42.25 -mt-8 md:mt-9 dark:invert" />
         <div class="flex flex-row items-center justify-start w-full h-full">
             <div
-                class="flex flex-col items-start justify-start gap-4 md:gap-8 h-full w-full md:w-[633px] md:pt-14"
+                class="flex flex-col items-start justify-start gap-4 md:gap-8 h-full w-full md:w-158.25 md:pt-14"
             >
                 <div
                     class="hidden md:flex flex-col items-start justify-around gap-2 w-full"
@@ -44,7 +44,7 @@ import Layout from "layouts/Layout.astro";
                     Read about my work on <Link href="/blog">my blog</Link>.
                 </p>
                 <div class="w-full h-full block md:hidden mx-auto my-auto ml-4">
-                    <AsciiRenderer resolution={0.4} client:visible />
+                    <AsciiRenderer resolution={0.4} />
                 </div>
                 <div
                     class="mt-auto mb-6 md:mb-4 flex flex-col items-start justify-end gap-1 w-full"
@@ -63,7 +63,7 @@ import Layout from "layouts/Layout.astro";
                 </div>
             </div>
             <div class="flex-1 h-full hidden md:block">
-                <AsciiRenderer resolution={0.25} client:visible />
+                <AsciiRenderer resolution={0.25} />
             </div>
         </div>
     </div>
